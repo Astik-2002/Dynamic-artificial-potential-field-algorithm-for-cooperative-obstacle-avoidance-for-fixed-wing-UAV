@@ -1,0 +1,30 @@
+%dALF-LQR algorithm for co-operative obstacle avoidance and path planning in a dynamic
+%environment for micro fixed wing UAV. 
+%Basic algorithm for obstacle aviodance
+%plotting the potential for a bell-curve function
+[x,y] = meshgrid(linspace(-20,20,100));
+t = 0:0.01:2;
+w1 = 15;
+w2 = 5;
+for i=1:length(t)
+    theta = w1*t(i);
+    theta2 = w2*t(i);
+    z_mpf2 = 5.*((cos(theta)+2).*(((x-6).^2)./9+((y-6).^2)./9+1)).^(-1);
+    z_mpf = 5.*((cos(theta)+200).*((((x+6).*cos(theta2)+(y-6).*sin(theta2))./50).^2+(((x+6).*sin(theta2)-(y-6).*cos(theta2))./70).^2)+1).^(-1);
+    [f1,f2] = gradient(z_mpf);
+    fx = -1.*f1;
+    fy = -2.*f2;
+    %quiver(x,y,fx,fy)
+    %hold on
+    surf(x,y,z_mpf)
+    %contour(x,y,z_mpf)
+    %hold off
+    %view(2)
+    drawnow
+    pause(0.01)
+%     [f1,f2] = gradient(z);
+%     fx = -1.*f1;
+%     fy = -1.*f2;
+%     quiver(x,y,fx,fy)
+%z3 = 5.*(((x-6).^2)./2+((y-6).^2)./9+1).^(-1);
+end
