@@ -54,8 +54,13 @@ for i = 1:length(t)
     r1_grad = (1+(X/a)^2+(Y/b)^2);
     d = sqrt(X.^2+Y.^2);
     disp(d)
-    vx = 12*((Y*sin(theta)/(b^2))-(X*cos(theta)/(a^2)))/(r1_grad^2)+0.005*(X_goal);
-    vy = -12*((Y*cos(theta)/(b^2))+(X*sin(theta)/(a^2)))/(r1_grad^2)+0.005*(Y_goal);
+    if d<=100
+        vx = 12*((Y*sin(theta)/(b^2))-(X*cos(theta)/(a^2)))/(r1_grad^2)+0.005*(X_goal);
+        vy = -12*((Y*cos(theta)/(b^2))+(X*sin(theta)/(a^2)))/(r1_grad^2)+0.005*(Y_goal);
+    else
+        vx = 0.005*X_goal;
+        vy = 0.005*Y_goal;
+    end
     [f1,f2] = gradient(mpf);
     quiver(x,y,-1.*f1,-1.*f2)
     %surf(x,y,mpf)
